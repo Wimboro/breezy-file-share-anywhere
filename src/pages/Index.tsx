@@ -26,7 +26,10 @@ const Index = () => {
   useEffect(() => {
     // Initialize peer connection manager
     const info = peerManager.init();
-    setLocalPeerInfo(info);
+    setLocalPeerInfo({
+      id: info.localPeerId,
+      name: info.localPeerName
+    });
     setUserName(info.localPeerName);
 
     // Setup event listeners
