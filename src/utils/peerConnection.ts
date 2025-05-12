@@ -1,4 +1,3 @@
-
 import { toast } from "@/components/ui/use-toast";
 
 type PeerData = {
@@ -47,7 +46,7 @@ class PeerConnectionManager {
     // Set up peer connection
     this.setupPeerDiscovery();
     
-    // Return local peer info
+    // Return local peer info with consistent property names
     return {
       id: this.localPeerId,
       name: this.localPeerName

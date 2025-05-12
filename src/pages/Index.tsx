@@ -27,10 +27,10 @@ const Index = () => {
     // Initialize peer connection manager
     const info = peerManager.init();
     setLocalPeerInfo({
-      id: info.localPeerId,
-      name: info.localPeerName
+      id: info.id,
+      name: info.name
     });
-    setUserName(info.localPeerName);
+    setUserName(info.name);
 
     // Setup event listeners
     peerManager.setOnPeersChangeListener((newPeers) => {
