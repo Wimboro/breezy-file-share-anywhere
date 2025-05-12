@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Check, Laptop, Monitor, Smartphone, Tablet } from "lucide-react";
+import { Computer, Laptop, Monitor, Smartphone, Tablet, Wifi, WifiOff, Server } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -30,8 +30,14 @@ const PeersList = ({ peers, selectedPeerId, onSelectPeer }: PeersListProps) => {
       return <Tablet className="h-4 w-4" />;
     } else if (lowerName.includes("mac") || lowerName.includes("book")) {
       return <Laptop className="h-4 w-4" />;
-    } else {
+    } else if (lowerName.includes("tv") || lowerName.includes("monitor")) {
       return <Monitor className="h-4 w-4" />;
+    } else if (lowerName.includes("router") || lowerName.includes("network")) {
+      return <Wifi className="h-4 w-4" />;
+    } else if (lowerName.includes("server") || lowerName.includes("nas")) {
+      return <Server className="h-4 w-4" />;
+    } else {
+      return <Computer className="h-4 w-4" />;
     }
   };
 
@@ -49,10 +55,13 @@ const PeersList = ({ peers, selectedPeerId, onSelectPeer }: PeersListProps) => {
       {peers.length === 0 ? (
         <div className="text-center py-8">
           <div className="animate-pulse mb-3 flex justify-center">
-            <Monitor className="h-8 w-8 text-muted-foreground/50" />
+            <WifiOff className="h-8 w-8 text-muted-foreground/50" />
           </div>
           <p className="text-sm text-muted-foreground">
             Scanning for devices...
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Make sure devices are on the same network
           </p>
         </div>
       ) : (
@@ -63,7 +72,8 @@ const PeersList = ({ peers, selectedPeerId, onSelectPeer }: PeersListProps) => {
               variant={selectedPeerId === peer.id ? "default" : "outline"}
               className={cn(
                 "w-full justify-start bg-opacity-80 hover:bg-opacity-100 transition-all",
-                selectedPeerId === peer.id ? "bg-primary text-primary-foreground" : ""
+                selectedPeerId === peer.id ? "bg-primary text-primary-foreground" : "",
+                peer.connection ? "border-green-500/30" : ""
               )}
               onClick={() => onSelectPeer(peer.id)}
               onMouseEnter={() => setHoveredId(peer.id)}
@@ -75,7 +85,11 @@ const PeersList = ({ peers, selectedPeerId, onSelectPeer }: PeersListProps) => {
                   <span className="ml-2 font-medium">{peer.name}</span>
                 </div>
                 {selectedPeerId === peer.id && (
-                  <Check className="h-4 w-4 ml-2" />
+                  <div className="flex items-center">
+                    <span className="text-xs bg-secondary/50 px-2 py-0.5 rounded mr-2">
+                      Ready
+                    </span>
+                  </div>
                 )}
               </div>
             </Button>
